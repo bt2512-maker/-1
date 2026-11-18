@@ -107,7 +107,7 @@ ${sim.length?`<h2 style="margin-bottom:18px">Схожі послуги</h2><div 
 let pend=null,sy=0;
 function route(){const m=location.hash.match(/^#service-([\w-]+)$/),d=$("#detail"),mn=$("main");
 if(m){const s=S.find(x=>x.id===m[1]);if(s){if(!mn.hidden)sy=scrollY;d.innerHTML=detail(s);$("#adminv").hidden=true;d.hidden=false;mn.hidden=true;document.title=s.name+" — Бульбашка";scrollTo(0,0);return}}
-const av=$("#adminv");if(location.hash==="#admin"&&IS_OWNER){if(!mn.hidden)sy=scrollY;av.hidden=false;d.hidden=true;mn.hidden=true;document.title="Адмін-панель — Бульбашка";renderAdmin();scrollTo(0,0);return}av.hidden=true;const was=mn.hidden;d.hidden=true;mn.hidden=false;document.title="Бульбашка — клінінгова компанія";
+const av=$("#adminv");if(location.hash==="#admin"&&!IS_OWNER&&READY&&!dlg.open)loginDlg();if(location.hash==="#admin"&&IS_OWNER){if(!mn.hidden)sy=scrollY;av.hidden=false;d.hidden=true;mn.hidden=true;document.title="Адмін-панель — Бульбашка";renderAdmin();scrollTo(0,0);return}av.hidden=true;const was=mn.hidden;d.hidden=true;mn.hidden=false;document.title="Бульбашка — клінінгова компанія";
 if(pend){$("#svc").value=pend.id;$("#req [name=msg]").value=pend.extra;pend=null}
 if(was){const id=location.hash.slice(1),t=id&&document.getElementById(id);t?t.scrollIntoView():scrollTo(0,sy)}}
 $("#detail").addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(!g)return;const ex=[...document.querySelectorAll("#detail .opt input:checked")].map(i=>i.dataset.n);pend={id:g.dataset.go,extra:ex.length?"Додаткові опції: "+ex.join(", "):""};location.hash="order"});
@@ -144,20 +144,20 @@ $("#alist").innerHTML=S.filter(s=>s.name.toLowerCase().includes(q)).map(s=>`<div
 $("#adminv").addEventListener("click",e=>{const t=e.target;if(t.closest("#aadd"))return formDlg();if(t.closest("#alo")){logout();return}const a=t.closest("[data-ae]"),d=t.closest("[data-ad]");if(a)formDlg(S.find(x=>x.id===a.dataset.ae));if(d)del(S.find(x=>x.id===d.dataset.ad))});
 $("#adminv").addEventListener("input",e=>{if(e.target.id==="aq")renderAdmin()});
 const setFoot=()=>{$("#fadm").textContent=IS_OWNER?"Адмін-панель":"Адмін"};
-function enter(tok){try{sessionStorage.setItem("gh",tok)}catch(e){}IS_OWNER=true;document.body.classList.add("owner");setFoot()}
-function logout(){GH.tok="";try{sessionStorage.removeItem("gh")}catch(e){}IS_OWNER=false;document.body.classList.remove("owner");setFoot();location.hash="services"}
+function enter(tok,keep){try{sessionStorage.setItem("gh",tok);if(keep)localStorage.setItem("gh",tok)}catch(e){}IS_OWNER=true;document.body.classList.add("owner");setFoot()}
+function logout(){GH.tok="";try{sessionStorage.removeItem("gh");localStorage.removeItem("gh")}catch(e){}IS_OWNER=false;document.body.classList.remove("owner");setFoot();location.hash="services"}
 const errTxt=x=>x.code===0?"Вкажіть логін і репозиторій GitHub у файлі js/config.js":x.code===401?"Токен недійсний або прострочений":x.code===403?"У токена немає права запису в цей репозиторій":x.code===404?"Репозиторій не знайдено: перевірте js/config.js і права токена":"Помилка зв’язку з GitHub. Спробуйте ще раз";
 async function loginDlg(){let blob=null;try{const r=await fetch("data/admin.json?t="+Date.now(),{cache:"no-store"});if(r.ok)blob=await r.json()}catch(e){}
-dlg.innerHTML=blob?`<h3>Вхід для адміністратора</h3><form class="dlgf" id="pf"><label>Пароль<input type="password" id="apw" required autocomplete="current-password"></label><small id="pe" style="color:#C0392B"></small><div class="dact"><button class="btn ghost" type="button" data-x>Скасувати</button><button class="btn" type="submit">Увійти</button></div></form>`:`<h3>Перший вхід: налаштування</h3><p style="margin-top:0;color:var(--mut)">Вставте токен GitHub (інструкція в README) і придумайте пароль. Далі заходитимете лише за паролем.</p><form class="dlgf" id="pf"><label>Токен GitHub<input type="password" id="atk" required autocomplete="off"></label><label>Новий пароль (від 12 символів)<input type="password" id="apw" required minlength="12" autocomplete="new-password"></label><small id="pe" style="color:#C0392B"></small><div class="dact"><button class="btn ghost" type="button" data-x>Скасувати</button><button class="btn" type="submit">Зберегти й увійти</button></div></form>`;
-dlg.showModal();$(blob?"#apw":"#atk").focus();
+dlg.innerHTML=blob?`<h3>Вхід для адміністратора</h3><form class="dlgf" id="pf"><label>Пароль<input type="password" id="apw" required autocomplete="current-password"></label><label class="chk"><input type="checkbox" id="spw"> Показати пароль</label><label class="chk"><input type="checkbox" id="keep"> Запам’ятати на цьому пристрої</label><small id="pe" style="color:#C0392B"></small><div class="dact"><button class="btn ghost" type="button" data-x>Скасувати</button><button class="btn" type="submit">Увійти</button></div></form>`:`<h3>Перший вхід: налаштування</h3><p style="margin-top:0;color:var(--mut)">Вставте токен GitHub (інструкція в README) і придумайте пароль. Далі заходитимете лише за паролем.</p><form class="dlgf" id="pf"><label>Токен GitHub<input type="password" id="atk" required autocomplete="off"></label><label>Новий пароль (від 12 символів)<input type="password" id="apw" required minlength="12" autocomplete="new-password"></label><label class="chk"><input type="checkbox" id="spw"> Показати пароль</label><small id="pe" style="color:#C0392B"></small><div class="dact"><button class="btn ghost" type="button" data-x>Скасувати</button><button class="btn" type="submit">Зберегти й увійти</button></div></form>`;
+dlg.showModal();$(blob?"#apw":"#atk").focus();$("#spw").onchange=e=>{$("#apw").type=e.target.checked?"text":"password"};
 $("#pf").onsubmit=async e=>{e.preventDefault();const bt=e.submitter;if(bt)bt.disabled=true;$("#pe").textContent="Перевіряю…";
 try{let tok;if(blob){try{tok=await unseal($("#apw").value,blob)}catch(x){throw Object.assign(new Error("pw"),{code:-1})}await checkToken(tok)}
 else{tok=$("#atk").value.trim();await checkToken(tok);await putFile("data/admin.json",utf8b64(JSON.stringify(await seal($("#apw").value,tok))),"Налаштування адмін-доступу")}
-enter(tok);await loadFresh();dlg.close();render();toast("Режим адміністратора увімкнено");location.hash="admin"}
+enter(tok,$("#keep")&&$("#keep").checked);await loadFresh();dlg.close();render();toast("Режим адміністратора увімкнено");location.hash==="#admin"?route():location.hash="admin"}
 catch(x){$("#pe").textContent=x.code===-1?"Невірний пароль":errTxt(x);if(bt)bt.disabled=false}}}
 $("#fadm").onclick=()=>{IS_OWNER?location.hash="admin":loginDlg()};
 (async()=>{try{const r=await fetch("data/services.json?t="+Math.floor(Date.now()/6e4));if(r.ok){const a=await r.json();if(Array.isArray(a)&&a.length){S=byOrd(a);DBN=1}}}catch(e){}
-try{const t=sessionStorage.getItem("gh");if(t){await checkToken(t);enter(t);await loadFresh()}}catch(e){}
+try{const t=sessionStorage.getItem("gh")||localStorage.getItem("gh");if(t){await checkToken(t);enter(t);await loadFresh()}}catch(e){}
 READY=true;render();route();setFoot()})();
 addEventListener("hashchange",route);
 chips();render();

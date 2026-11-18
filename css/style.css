@@ -90,3 +90,6 @@ details{background:var(--surf);border:1px solid var(--line);border-radius:16px;p
 @media (max-width:480px){.wrap{padding:0 16px}.hero h1{font-size:1.9rem}.cta .btn{flex:1 1 100%;text-align:center}.form{padding:18px}.dprice b{font-size:1.6rem}.btn{min-height:44px}.acts .btn{flex:1 1 auto;text-align:center}}
 @media (prefers-reduced-motion:reduce){.b,.promo{animation:none}html{scroll-behavior:auto}}
 .fbtn{background:transparent;border:1px solid rgba(230,246,244,.4);color:#B9DAD6;border-radius:999px;padding:6px 18px;font:600 .85rem Manrope,system-ui,sans-serif;cursor:pointer}.fbtn:hover{color:#fff;border-color:#fff}
+
+.dlgf .chk{display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--mut);cursor:pointer}
+.dlgf .chk input{width:auto;margin:0}
