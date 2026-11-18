@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Бульбашка — клінінгова компанія</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🫧%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header><div class="wrap">
+<a class="logo" href="#top"><i></i>Бульбашка</a>
+<nav><a href="#about">Про нас</a><a href="#services">Послуги</a><a href="#process">Як працюємо</a><a href="#contacts">Контакти</a><a class="own" href="#admin">Адмін</a></nav>
+<a class="btn sm" href="#order">Залишити заявку</a>
+</div></header>
+
+<div id="detail" hidden></div>
+<div id="adminv" hidden><div class="wrap dt"><a class="back" href="#services">Назад на сайт</a><h1 style="font-size:clamp(1.5rem,4vw,2.2rem);margin-bottom:8px">Адмін-панель</h1><p class="lead">Цю сторінку бачите лише ви. Зміни одразу з’являються на сайті.</p><div id="adminbody"></div></div></div>
+<main id="top">
+<div class="hero" id="hero"><div class="wrap">
+<div>
+<h1>Вдома має бути легко дихати</h1>
+<p>Бульбашка прибирає квартири та офіси, а після генерального прибирання повертає простору світло. Безпечні засоби, своя команда, чітка ціна до початку робіт.</p>
+<div class="cta"><a class="btn" href="#services">Обрати послугу</a><a class="btn ghost" href="#order">Розрахувати вартість</a></div>
+<div class="trust"><span>⭐ 4,9 із 5</span><span>🧴 Еко-засоби</span><span>⏱ Приїзд за 2 години</span></div>
+</div>
+<div class="promo"><div><span>Перше прибирання</span><b>–15%</b><span>для нових клієнтів</span></div></div>
+</div></div>
+
+<section id="about"><div class="wrap about">
+<div><h2>Про компанію</h2>
+<p class="lead">Ми працюємо з 2016 року й прибираємо щодня: від однокімнатних квартир до офісів на кілька поверхів. Кожне замовлення виконує закріплена бригада з чек-листом, тож результат не залежить від настрою чи випадку.</p>
+<a class="btn ghost" href="#process">Як це відбувається</a></div>
+<div class="facts">
+<div class="fact"><h3>Безпечна хімія</h3><p>Гіпоалергенні засоби, які не шкодять дітям і домашнім улюбленцям.</p></div>
+<div class="fact"><h3>Своя команда</h3><p>Перевірені клінери в штаті, без випадкових підрядників.</p></div>
+<div class="fact"><h3>Гарантія результату</h3><p>Якщо щось не влаштувало, переприбираємо безкоштовно протягом доби.</p></div>
+</div></div></section>
+
+<section id="result" style="padding-top:0"><div class="wrap about"><div><h2>Різницю видно одразу</h2><p class="lead">Посуньте повзунок і порівняйте кімнату до та після роботи нашої бригади.</p><ul class="checks"><li>Чек-лист на кожне приміщення</li><li>Фотозвіт після прибирання</li><li>Переприбирання протягом доби, якщо щось не так</li></ul></div>
+<div class="ba" id="ba"><img id="b1" alt="Вітальня до прибирання: брудні стіни, дивани й підлога, розкидані речі"><img id="b2" class="aft" alt="Та сама вітальня після прибирання: чисті стіни, дивани й підлога"><span class="ba-t l">До</span><span class="ba-t r">Після</span><i class="ba-line"></i><input id="bar" type="range" min="0" max="100" value="50" aria-label="Порівняти до і після"></div></div></section>
+<section id="services" style="background:var(--bg)"><div class="wrap">
+<h2>Послуги та ціни</h2>
+<p class="lead">Знайдіть потрібну послугу за назвою, оберіть категорію й обмежте бюджет.</p>
+<div class="bar">
+<label class="grow">Пошук за назвою<input id="q" type="search" placeholder="Наприклад, вікна"></label>
+<label>Ціна від, грн<input id="mn" type="number" min="0" step="100" placeholder="0"></label>
+<label>Ціна до, грн<input id="mx" type="number" min="0" step="100" placeholder="10000"></label>
+<label class="wide">Сортування<select id="so"><option value="def">За замовчуванням</option><option value="pa">Ціна: від низької</option><option value="pd">Ціна: від високої</option><option value="na">Назва: А–Я</option><option value="nd">Назва: Я–А</option></select></label>
+<button class="btn ghost" id="reset" type="button">Скинути</button>
+</div>
+<div class="chips" id="chips"></div>
+<div class="meta"><span id="cnt"></span>
+<span><button class="btn ghost sm own" id="adm" type="button" aria-pressed="false">Керування послугами</button>
+<button class="btn sm admin-only" id="add" type="button">Додати послугу</button></span></div>
+<div class="grid" id="grid"></div>
+</div></section>
+
+<section id="process"><div class="wrap">
+<h2>Як ми працюємо</h2>
+<p class="lead">Чотири кроки від заявки до чистого дому.</p>
+<div class="steps">
+<div class="step"><h3>Заявка</h3><p>Обираєте послугу та зручний час.</p></div>
+<div class="step"><h3>Розрахунок</h3><p>Менеджер уточнює деталі й називає остаточну ціну.</p></div>
+<div class="step"><h3>Прибирання</h3><p>Бригада приїздить зі своїм інвентарем і засобами.</p></div>
+<div class="step"><h3>Приймання</h3><p>Ви оглядаєте результат, і за потреби ми одразу виправляємо.</p></div>
+</div></div></section>
+
+<section id="reviews"><div class="wrap"><h2>Відгуки клієнтів</h2><p class="lead">Що кажуть ті, кому ми вже повернули чистоту.</p><div class="revs">
+<blockquote class="rev"><span>★★★★★</span><p>Приїхали вчасно, за три години квартира сяяла. Навіть за шафами протерли.</p><cite>Олена, 2-кімнатна квартира</cite></blockquote>
+<blockquote class="rev"><span>★★★★★</span><p>Замовили щоденне прибирання офісу. Тепер ранок починається з чистих столів і свіжої кави.</p><cite>Андрій, керівник IT-студії</cite></blockquote>
+<blockquote class="rev"><span>★★★★★</span><p>Після ремонту думали, що пил не відмити. Відмили все, навіть вікна від плівки.</p><cite>Марина, новобудова</cite></blockquote>
+</div></div></section>
+<section class="order" id="order"><div class="wrap">
+<h2>Заявка на прибирання</h2>
+<p class="lead">Заповніть форму, і ми передзвонимо протягом 15 хвилин у робочий час.</p>
+<div id="formbox"><form class="form" id="req">
+<label>Ім’я<input name="name" required minlength="2" autocomplete="name"></label>
+<label>Телефон<input name="phone" type="tel" required pattern="[+0-9 ()\-]{10,}" placeholder="+380 …" autocomplete="tel"></label>
+<label>Послуга<select name="svc" id="svc" required></select></label>
+<label>Бажана дата<input name="date" type="date" required></label>
+<label class="full">Адреса<input name="addr" required autocomplete="street-address"></label>
+<label class="full">Коментар<textarea name="msg" placeholder="Площа, наявність тварин, побажання"></textarea></label>
+<div class="full"><button class="btn" type="submit">Надіслати заявку</button></div>
+</form></div>
+</div></section>
+</main>
+
+<footer id="contacts"><div class="wrap">
+<div><h3 style="font-size:1.2rem;margin-bottom:8px">Бульбашка</h3><p>Клінінгова компанія для дому та бізнесу</p></div>
+<div><p><b>Телефон</b></p><p>+380 44 123 45 67</p><p>hello@bulbashka.example</p></div>
+<div><p><b>Графік</b></p><p>Щодня з 8:00 до 21:00</p><p>Київ і передмістя</p><p style="margin-top:14px"><button class="fbtn" id="fadm" type="button">Адмін</button></p></div>
+</div></footer>
+
+<dialog id="dlg"></dialog>
+<div id="toast" role="status"></div>
+
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
